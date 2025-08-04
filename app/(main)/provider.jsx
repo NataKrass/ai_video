@@ -20,7 +20,7 @@ function DashboardProvider({children}) {
     router.replace('/');
    }
   }
-
+  
   return (
     <SidebarProvider>
       <AppSidebar />
