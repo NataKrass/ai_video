@@ -7,9 +7,11 @@ import Captions from './_components/Captions';
 import { WandSparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Preview from './_components/Preview';
+import axios from 'axios';
 
 function CreateNewVideo() {
   const [formData, setFormData] = useState();
+  const [errorText, setErrorText] = useState();
   const handleInputChange = (fieldName, fieldValue) => {
     setFormData(prev => ({
       ...prev,
@@ -18,24 +20,41 @@ function CreateNewVideo() {
     console.log(formData)
   }
 
+  const GenerateVideo = async () => {
+
+    if(!formData?.title || !formData?.topic || !formData?.videoStyle || !formData?.caption || !formData?.voice ) {
+      console.log("Error", "Enter all fields");
+      setErrorText('Fill all fields');
+      return;
+    } else {
+      const result = await axios.post('/api/generate-video-data', {
+        ...formData
+      });
+      
+      console.log(result)
+    }
+    
+  }
+
   return (
     <div>
       <h2 className='text-3xl'>Create New Video</h2>
       <div className='grid grid-cols-1 md:grid-cols-3 mt-8'>
         <div className='col-span-2 p-7 border rounded-xl h-[70vh] overflow-auto'>
           {/* Topic & script */}
-          <Topic handleInputChange = {handleInputChange}/>
+          <Topic handleInputChange={handleInputChange} />
           {/* Video Image Style */}
-          <VideoStyle handleInputChange = {handleInputChange}/>
+          <VideoStyle handleInputChange={handleInputChange} />
           {/* Voice */}
-          <Voice handleInputChange = {handleInputChange} />
+          <Voice handleInputChange={handleInputChange} />
           {/* Captions */}
-          <Captions handleInputChange = {handleInputChange} />
-          <Button className='mt-5 w-full'><WandSparkles /> Generate Video</Button>
+          <Captions handleInputChange={handleInputChange} />
+          <p className='text-center text-red-500 text-base'>{errorText}</p>
+          <Button onClick={!errorText ? GenerateVideo : null} className='mt-5 w-full'><WandSparkles /> Generate Video</Button>
         </div>
         <div>
-  <Preview formData={formData} />
-</div>
+          <Preview formData={formData} />
+        </div>
       </div>
 
 

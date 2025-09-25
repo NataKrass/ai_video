@@ -85,7 +85,10 @@ function Topic({ handleInputChange }) {
           {script?.map((item, idx) => (
             <div 
               key={idx} 
-              onClick={() => setselectedScripIdx(idx)}
+              onClick={() => {
+                setselectedScripIdx(idx);
+                handleInputChange('script', item.content)
+              }}
               className={`p-3 cursor-pointer border rounded-lg mt-1 ${selectedScriptIdx == idx && 'border-white bg-secondary'}`}>
               <h2 className='line-clamp-3 text-sm text-gray-300'>
                 {item.content}</h2>
