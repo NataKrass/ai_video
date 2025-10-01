@@ -26,7 +26,14 @@ function Topic({ handleInputChange }) {
 
   const [selected, setSelected] = useState('Kids Story');
   const [selectedScriptIdx, setselectedScripIdx] = useState();
-  const [script, setScript] = useState();
+  const [script, setScript] = useState([
+    {
+        content: "Once upon a time, lived a tiny seed. The wind blew it far, far away. The sun warmed the seed, and the rain watered it. Slowly, a little sprout peeked out. It grew and grew, becoming a tall, strong tree. Birds sang in its branches, squirrels played around its roots, and everyone enjoyed its shade. The tiny seed had become a home for all!"
+    },
+    {
+        content: "Lily loved to draw. One day, she drew a sad little cloud. Suddenly, it started raining inside her house! Lily quickly drew a big, bright sun. The rain stopped, and the sun shone warmly on her. From that day on, Lily knew her drawings could make the world a little brighter, one picture at a time."
+    }
+]);
   const [loading, setLoading] = useState(false);
 
   const generateScript = async () => {
@@ -36,7 +43,7 @@ function Topic({ handleInputChange }) {
       const result = await axios.post('/api/generate-script', {
         topic: selected
       });
-      console.log('result data:', result.data)
+      console.log('result data:', result?.data?.scripts)
       setScript(result?.data?.scripts);
     }
     catch (e) {
