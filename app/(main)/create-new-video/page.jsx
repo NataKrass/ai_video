@@ -38,9 +38,9 @@ function CreateNewVideo() {
       return;
     } else {
       setLoading(true);
-      // const result = await axios.post('/api/generate-video-data', {
-      //   ...formData
-      // });
+      const result = await axios.post('/api/generate-video-data', {
+        ...formData
+      });
       
       // console.log(result)
       console.log('good')
