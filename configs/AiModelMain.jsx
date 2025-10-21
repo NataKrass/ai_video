@@ -2,6 +2,8 @@ import {
   GoogleGenAI,
 } from '@google/genai';
 
+import OpenAI from "openai";
+
 export async function GenerateScript(topic, promptTemplate) {
   const ai = new GoogleGenAI({
     apiKey: process.env.NEXT_GEMINI_API_KEY,
@@ -99,3 +101,30 @@ script: ${script}
     throw new Error('Failed to parse AI Image response as JSON');
   }
 }
+
+export async function GenerateImageFromPrompt(prompt) {
+  try {
+    const client = new OpenAI({
+      apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY
+    });
+
+    const response = await client.images.generate({
+      model: "gpt-image-1", // DALL·E
+      prompt: prompt,
+      size: "1024x1024",
+      n: 1 // кількість картинок
+    });
+
+    // Повертаємо URL першої картинки
+    return response.data[0].url;
+
+  } catch (error) {
+    console.error("Error generating image:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+
+
+
+
