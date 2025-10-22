@@ -1,7 +1,9 @@
 import axios from "axios";
 import { inngest } from "./client";
 import { createClient } from "@deepgram/sdk";
+import { ConvexHttpClient } from "convex/browser";
 import { GenerateImageFromPrompt, GenerateImagePromptScript } from "@/configs/AiModelMain";
+import { api } from "@/convex/_generated/api";
 
 
 const ImagePromptScript = `Generate Image prompt of {style} style with all details for each scene for 30 seconds video : script : {script}
@@ -32,10 +34,9 @@ export const GenerateVideoData = inngest.createFunction(
     const BASE_URL='https://aigurulab.tech';
     // const BASE_URL='http://localhost:3005/';
 
-    const { script, topic, title, caption, videoStyle, voice } = event?.data;
-    console.log('Event data:', event?.data);
-    console.log('Script:', script);
-    console.log('Voice:', voice);
+    const { script, topic, title, caption, videoStyle, voice, recordId } = event?.data;
+    const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL);
+
     // Generate Audio
     const GenerateAudioFile = await step.run(
       "GenerateAudioFile",
@@ -79,52 +80,64 @@ export const GenerateVideoData = inngest.createFunction(
     // )
 
     //Generate Image Prompt from  script
-    const GenerateImagePrompts = await step.run(
-      "generateImagePrompt",
-      async () => {
-        const result = await GenerateImagePromptScript(videoStyle, script);
+    // const GenerateImagePrompts = await step.run(
+    //   "generateImagePrompt",
+    //   async () => {
+    //     const result = await GenerateImagePromptScript(videoStyle, script);
 
-        return result;
-      }
-    )
+    //     return result;
+    //   }
+    // )
 
     //Generate Image from Prompt 
 
-    const GenerateImages = await step.run(
-      "generateImages", 
-      async () => {
-        let images = [
-          "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057182268.png?alt=media&token=111898c0-8d1b-494a-b0dc-67ee59c9b5fc",
-          "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057178678.png?alt=media&token=3011dbd8-d42d-454f-8615-6845328aaf1d",
-          "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057182365.png?alt=media&token=7d7bdbb9-37f9-430a-b82a-a1e35858926c",
-          "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057178816.png?alt=media&token=8a87de4e-2521-458b-9311-d5c66b4f2527",
-          "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057183785.png?alt=media&token=5f1ae398-3880-4030-824f-f63df90f296a"
-        ]
-        let imagesGen = []
-        imagesGen = await Promise.all(
-          GenerateImagePrompts.map(async(el) => {
-            const result = await axios.post(BASE_URL+'/api/generate-image',
-            {
-                width: 1024,
-                height: 1024,
-                input: el?.imagePrompt,
-                model: 'sdxl',//'flux'
-                aspectRatio:"1:1"//Applicable to Flux model only
-            },
-            {
-                headers: {
-                    'x-api-key': process.env.AIGURULAB_API_KEY,
-                    'Content-Type': 'application/json', // Content Type
-                },
-            })
-            return result?.data.image
-          })
-        )
-        return images
-    });
+    // const GenerateImages = await step.run(
+    //   "generateImages", 
+    //   async () => {
+    //     let images = [
+    //       "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057182268.png?alt=media&token=111898c0-8d1b-494a-b0dc-67ee59c9b5fc",
+    //       "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057178678.png?alt=media&token=3011dbd8-d42d-454f-8615-6845328aaf1d",
+    //       "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057182365.png?alt=media&token=7d7bdbb9-37f9-430a-b82a-a1e35858926c",
+    //       "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057178816.png?alt=media&token=8a87de4e-2521-458b-9311-d5c66b4f2527",
+    //       "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057183785.png?alt=media&token=5f1ae398-3880-4030-824f-f63df90f296a"
+    //     ]
+    //     let imagesGen = []
+    //     // imagesGen = await Promise.all(
+    //     //   GenerateImagePrompts.map(async(el) => {
+    //     //     const result = await axios.post(BASE_URL+'/api/generate-image',
+    //     //     {
+    //     //         width: 1024,
+    //     //         height: 1024,
+    //     //         input: el?.imagePrompt,
+    //     //         model: 'sdxl',//'flux'
+    //     //         aspectRatio:"1:1"//Applicable to Flux model only
+    //     //     },
+    //     //     {
+    //     //         headers: {
+    //     //             'x-api-key': process.env.AIGURULAB_API_KEY,
+    //     //             'Content-Type': 'application/json', // Content Type
+    //     //         },
+    //     //     })
+    //     //     return result?.data.image
+    //     //   })
+    //     // )
+    //     return images
+    // });
     
-
-    return GenerateImages;
+    //Save all to DB
+    const UpdateDB = await step.run(
+      'UpdateDB',
+      async () => {
+        const result = await convex.mutation(api.videodata.UpdateVideoRecord, {
+          recordId: recordId,
+          audioUrl: '',
+          captionJson: [],
+          images: []
+        });
+        return result;
+      }
+    )
+    return UpdateDB;
    
   }
 )
