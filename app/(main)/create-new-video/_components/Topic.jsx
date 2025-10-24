@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from "@/components/ui/textarea"
 import { Loader2Icon, SparkleIcon } from 'lucide-react'
 import axios from 'axios'
+import { useAuthContext } from '@/app/provider'
 
 const suggestions = [
   "Historic Story",
@@ -35,8 +36,14 @@ function Topic({ handleInputChange }) {
     }
 ]);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuthContext();
 
   const generateScript = async () => {
+    if(user?.credits <= 0 ) {
+      toast('Please add more credits');
+      return;
+    }
+
     setLoading(true);
     setselectedScripIdx(null);
     try {

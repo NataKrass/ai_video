@@ -26,6 +26,11 @@ function CreateNewVideo() {
   }
 
   const GenerateVideo = async () => {
+    if(user?.credits <= 0 ) {
+      toast('Please add more credits');
+      return;
+    }
+
     if(!formData?.title || !formData?.topic || !formData?.videoStyle || !formData?.caption || !formData?.voice ) {
       console.log("Error", "Enter all fields");
       console.log(!formData?.title,  !formData?.topic );
@@ -44,6 +49,7 @@ function CreateNewVideo() {
         voice: formData.voice,
         uid: user?._id,
         createdBy: user?.email,
+        credits: user?.credits
       })
 
       const result = await axios.post('/api/generate-video-data', {
