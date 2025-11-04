@@ -1,12 +1,12 @@
-"use client"
-import { Input } from '@/components/ui/input'
-import React, { useState } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from '@/components/ui/button'
-import { Textarea } from "@/components/ui/textarea"
-import { Loader2Icon, SparkleIcon } from 'lucide-react'
-import axios from 'axios'
-import { useAuthContext } from '@/app/provider'
+"use client";
+import { Input } from '@/components/ui/input';
+import React, { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from '@/components/ui/button';
+import { Textarea } from "@/components/ui/textarea";
+import { Loader2Icon, SparkleIcon } from 'lucide-react';
+import axios from 'axios';
+import { useAuthContext } from '@/app/provider';
 
 const suggestions = [
   "Historic Story",
@@ -21,7 +21,7 @@ const suggestions = [
   "Fantasy Adventures",
   "Motivational Stories",
   "Science experiments"
-]
+];
 
 function Topic({ handleInputChange }) {
 
@@ -29,18 +29,18 @@ function Topic({ handleInputChange }) {
   const [selectedScriptIdx, setselectedScripIdx] = useState();
   const [script, setScript] = useState([
     {
-        content: "Once upon a time, lived a tiny seed. The wind blew it far, far away. The sun warmed the seed, and the rain watered it. Slowly, a little sprout peeked out. It grew and grew, becoming a tall, strong tree. Birds sang in its branches, squirrels played around its roots, and everyone enjoyed its shade. The tiny seed had become a home for all!"
+      content: "Once upon a time, lived a tiny seed. The wind blew it far, far away. The sun warmed the seed, and the rain watered it. Slowly, a little sprout peeked out. It grew and grew, becoming a tall, strong tree. Birds sang in its branches, squirrels played around its roots, and everyone enjoyed its shade. The tiny seed had become a home for all!"
     },
     {
-        content: "Lily loved to draw. One day, she drew a sad little cloud. Suddenly, it started raining inside her house! Lily quickly drew a big, bright sun. The rain stopped, and the sun shone warmly on her. From that day on, Lily knew her drawings could make the world a little brighter, one picture at a time."
+      content: "Lily loved to draw. One day, she drew a sad little cloud. Suddenly, it started raining inside her house! Lily quickly drew a big, bright sun. The rain stopped, and the sun shone warmly on her. From that day on, Lily knew her drawings could make the world a little brighter, one picture at a time."
     }
-]);
+  ]);
   const [loading, setLoading] = useState(false);
   const { user } = useAuthContext();
 
   const generateScript = async () => {
-    if(user?.credits <= 0 ) {
-      toast('Please add more credits');
+    if (user?.credits <= 0) {
+      alert('Please add more credits');
       return;
     }
 
@@ -93,27 +93,27 @@ function Topic({ handleInputChange }) {
         </TabsContent>
       </Tabs>
       {script?.length > 0 &&
-       <div className='mt-3'>
-        <h2>Select The Script</h2>
-        <div className='grid grid-cols-2 gap-5'>
-          {script?.map((item, idx) => (
-            <div 
-              key={idx} 
-              onClick={() => {
-                setselectedScripIdx(idx);
-                handleInputChange('script', item.content)
-              }}
-              className={`p-3 cursor-pointer border rounded-lg mt-1 ${selectedScriptIdx == idx && 'border-white bg-secondary'}`}>
-              <h2 className='line-clamp-3 text-sm text-gray-300'>
-                {item.content}</h2>
-            </div>
-          ))}
+        <div className='mt-3'>
+          <h2>Select The Script</h2>
+          <div className='grid grid-cols-2 gap-5'>
+            {script?.map((item, idx) => (
+              <div
+                key={idx}
+                onClick={() => {
+                  setselectedScripIdx(idx);
+                  handleInputChange('script', item.content)
+                }}
+                className={`p-3 cursor-pointer border rounded-lg mt-1 ${selectedScriptIdx == idx && 'border-white bg-secondary'}`}>
+                <h2 className='line-clamp-3 text-sm text-gray-300'>
+                  {item.content}</h2>
+              </div>
+            ))}
+          </div>
         </div>
-        </div>
-        }
-     
+      }
+
       {!script?.length && <Button disabled={loading} className='mt-5' size='sm' onClick={generateScript}>
-        {loading ? <Loader2Icon className='animate-spin'/> : (<SparkleIcon /> )}Generate Script</Button>}
+        {loading ? <Loader2Icon className='animate-spin' /> : (<SparkleIcon />)}Generate Script</Button>}
     </div>
   )
 }
