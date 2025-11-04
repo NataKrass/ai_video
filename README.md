@@ -74,8 +74,12 @@ This project uses Remotion Cloud Run to render videos on Google Cloud.
 Each video is generated, uploaded, and stored in a Google Cloud Storage bucket for easy download.
 
 ### 📸 Preview
+![main](https://github.com/user-attachments/assets/53cd2d59-bacf-4dbe-a75e-bccd6f8600db)
+![create](https://github.com/user-attachments/assets/35917b79-f9d1-4a53-a456-c43f20b1022d)
+![home](https://github.com/user-attachments/assets/586fe35e-da1f-4020-b945-9443117d1f0d)
 
-Coming soon ...
+
+
 
 ### 🧑‍💻 Author
 
