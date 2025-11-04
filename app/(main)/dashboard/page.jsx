@@ -1,5 +1,5 @@
-import React from 'react'
-import VideoList from './_components/VideoList'
+import React from 'react';
+import VideoList from './_components/VideoList';
 
 function Dashboard() {
   return (

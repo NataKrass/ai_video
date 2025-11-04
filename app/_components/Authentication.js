@@ -1,9 +1,9 @@
 'use client'
-import React from 'react'
+import React from 'react';
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '@/configs/firebaseConfig';
 
-function Authentication({children}) {
+function Authentication({ children }) {
 
   const provider = new GoogleAuthProvider();
 
