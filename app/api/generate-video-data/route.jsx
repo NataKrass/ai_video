@@ -11,5 +11,5 @@ export async function POST(req) {
     },
     url: "http://localhost:3000" // порт CLI
   })
- return NextResponse.json({ result: result });
+  return NextResponse.json({ result: result });
 }

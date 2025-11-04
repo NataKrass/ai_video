@@ -3,7 +3,7 @@ import React from 'react'
 import Provider from './provider';
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-function ConvexClientProvider({children}) {
+function ConvexClientProvider({ children }) {
 
   const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
@@ -11,7 +11,7 @@ function ConvexClientProvider({children}) {
     <div>
       <ConvexProvider client={convex}>
         <Provider>
-        {children}
+          {children}
         </Provider>
       </ConvexProvider></div>
   )

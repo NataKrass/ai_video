@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { Loader2Icon, WandSparkles } from 'lucide-react';
 import { useMutation } from 'convex/react';
@@ -26,22 +26,22 @@ function CreateNewVideo() {
   }
 
   const GenerateVideo = async () => {
-    if(user?.credits <= 0 ) {
-      toast('Please add more credits!');
+    if (user?.credits <= 0) {
+      alert('Please add more credits!');
       return;
     }
 
-    if(!formData?.title || !formData?.topic || !formData?.videoStyle || !formData?.caption || !formData?.voice ) {
+    if (!formData?.title || !formData?.topic || !formData?.videoStyle || !formData?.caption || !formData?.voice) {
       console.log("Error", "Enter all fields");
-      console.log(!formData?.title,  !formData?.topic );
+      console.log(!formData?.title, !formData?.topic);
       setErrorText('Fill all fields');
       return;
     } else {
       setLoading(true);
-      
+
       setErrorText(false);
       const resp = await CreateInitialVideoRecord({
-        title: formData.title, 
+        title: formData.title,
         topic: formData.topic,
         script: formData.script,
         videoStyle: formData.videoStyle,
@@ -59,7 +59,7 @@ function CreateNewVideo() {
       console.log('reesult:', result)
       setLoading(false);
     }
-    
+
   }
 
   return (
@@ -76,7 +76,7 @@ function CreateNewVideo() {
           {/* Captions */}
           <Captions handleInputChange={handleInputChange} />
           <p className='text-center text-red-500 text-base'>{errorText}</p>
-          {loading ? <Loader2Icon className='animate-spin'/> : <Button disabled={loading} onClick={ GenerateVideo } className='mt-5 w-full'><WandSparkles /> Generate Video</Button>}
+          {loading ? <Loader2Icon className='animate-spin' /> : <Button disabled={loading} onClick={GenerateVideo} className='mt-5 w-full'><WandSparkles /> Generate Video</Button>}
         </div>
         <div>
           <Preview formData={formData} />

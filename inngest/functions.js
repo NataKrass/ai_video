@@ -1,10 +1,9 @@
-import axios from "axios";
 import { inngest } from "./client";
 import { createClient } from "@deepgram/sdk";
 import { ConvexHttpClient } from "convex/browser";
-import { GenerateImageFromPrompt, GenerateImagePromptScript } from "@/configs/AiModelMain";
+import { GenerateImagePromptScript } from "@/configs/AiModelMain";
 import { api } from "@/convex/_generated/api";
-
+import { getServices, renderMediaOnCloudrun } from '@remotion/cloudrun/client';
 
 const ImagePromptScript = `Generate Image prompt of {style} style with all details for each scene for 30 seconds video : script : {script}
 - Just Give specifing image prompt depends on the story line
@@ -27,11 +26,11 @@ export const helloWorld = inngest.createFunction(
 );
 
 export const GenerateVideoData = inngest.createFunction(
-  { id: 'generate-video-data'},
-  { event: 'generate-video-data'},
-  async({ event, step }) => {
+  { id: 'generate-video-data' },
+  { event: 'generate-video-data' },
+  async ({ event, step }) => {
 
-    const BASE_URL='https://aigurulab.tech';
+    const BASE_URL = 'https://aigurulab.tech';
     // const BASE_URL='http://localhost:3005/';
 
     const { script, topic, title, caption, videoStyle, voice, recordId, credits } = event?.data;
@@ -40,7 +39,7 @@ export const GenerateVideoData = inngest.createFunction(
     // Generate Audio
     const GenerateAudioFile = await step.run(
       "GenerateAudioFile",
-      async() => {
+      async () => {
         // const result = await axios.post(BASE_URL+'/api/text-to-speech',
         // {
         //     input: script,
@@ -56,21 +55,21 @@ export const GenerateVideoData = inngest.createFunction(
         // })
         // console.log('audio', result.data.audio) //Output Result: Audio Mp3 Url
         // return result.data.audio;
-        return 'https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/audio%2F1758710931675.mp3?alt=media&token=5303f3d9-81e9-48ad-a850-76f7544c5034'
+        return 'https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/audio%2F1760719398183.mp3?alt=media&token=d779408c-1f48-431b-a4bc-559d415e0e66'
       }
     )
 
     // Generate Captions 
     const GenerateCaptions = await step.run(
       "generateCaptions",
-      async ()=> {
+      async () => {
         const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
 
         const { result, error } = await deepgram.listen.prerecorded.transcribeUrl(
           {
             url: GenerateAudioFile,
           },
-          
+
           {
             model: "nova-3",
           }
@@ -91,7 +90,7 @@ export const GenerateVideoData = inngest.createFunction(
     //Generate Image from Prompt 
 
     const GenerateImages = await step.run(
-      "generateImages", 
+      "generateImages",
       async () => {
         let images = [
           "https://firebasestorage.googleapis.com/v0/b/projects-2025-71366.firebasestorage.app/o/ai-guru-lab-images%2F1761057182268.png?alt=media&token=111898c0-8d1b-494a-b0dc-67ee59c9b5fc",
@@ -121,8 +120,8 @@ export const GenerateVideoData = inngest.createFunction(
         //   })
         // )
         return images
-    });
-    
+      });
+
     //Save all to DB
     const UpdateDB = await step.run(
       'UpdateDB',
@@ -136,10 +135,69 @@ export const GenerateVideoData = inngest.createFunction(
         return result;
       }
     )
-    //return UpdateDB;
-    return 'Executed successfully';
-   
+
+    const RenderVideo = await step.run(
+      "renderVideo",
+      async () => {
+        //Render Video
+        const services = await getServices({
+          region: 'us-east1',
+          compatibleOnly: true,
+        });
+
+        const serviceName = services[0].serviceName;
+        const result = await renderMediaOnCloudrun({
+          serviceName,
+          region: 'us-east1',
+          serveUrl: 'https://storage.googleapis.com/remotioncloudrun-1agbg28g98/sites/ai-video-generator-v2/index.html',
+          composition: 'youtubeShort',
+          inputProps: {
+            videoData: {
+              audioUrl: GenerateAudioFile,
+              captionJson: GenerateCaptions,
+              images: GenerateImages
+            }
+          },
+          codec: 'h264'
+        });
+
+        if (result.type === 'success') {
+          console.log(result.bucketName);
+          console.log(result.renderId);
+        }
+        console.log('🎬 Render result:', JSON.stringify(result, null, 2));
+
+        console.log('🧾 inputProps', JSON.stringify({
+          videoData: {
+            audioUrl: GenerateAudioFile,
+            captionJson: GenerateCaptions,
+            images: GenerateImages
+          }
+        }, null, 2));
+
+
+        return result?.publicUrl;
+      }
+    )
+
+    const UpdateDownloadUrl = await step.run(
+      'UpdateDownloadUrl',
+      async () => {
+        // TODO: make RenderVideo return a string
+        // const safeDownloadUrl = RenderVideo || undefined;
+        const safeDownloadUrl = 'https://storage.googleapis.com/remotioncloudrun-1agbg28g98/renders/otarjosy9b/out.mp4'
+        const result = await convex.mutation(api.videodata.UpdateVideoRecord, {
+          recordId: recordId,
+          audioUrl: GenerateAudioFile,
+          captionJson: GenerateCaptions,
+          images: GenerateImages,
+          downloadUrl: safeDownloadUrl
+        });
+        return result;
+      }
+    )
+    return RenderVideo
+    //return 'Executed successfully';
+
   }
 )
-
-

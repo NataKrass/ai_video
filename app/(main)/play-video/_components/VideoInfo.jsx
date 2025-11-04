@@ -1,19 +1,31 @@
-import { ArrowLeft } from 'lucide-react'
-import React from 'react'
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, DownloadIcon } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
 
-function VideoInfo({videoData}) {
+function VideoInfo({ videoData }) {
+  console.log(videoData)
+
   return (
     <div className='p-5 border rounded-xl'>
-      <h2>
-        <ArrowLeft />
-        Back to dashboard
-      </h2>
+      <Link href='/dashboard'>
+        <h2 className='flex gap-2 items-center'>
+          <ArrowLeft />
+          Back to dashboard
+        </h2>
+      </Link>
       <div className='flex flex-col gap-3'>
         <h2 className='mt-5'>Project Name: {videoData?.title}</h2>
-        <p class="text-gray-500">Script: {videoData?.script} </p>
+        <p className="text-gray-500">Script: {videoData?.script} </p>
         <h2>
           Video Style: {videoData?.videoStyle}
         </h2>
+        {
+          <a href={videoData?.downloadUrl || 'https://storage.googleapis.com/remotioncloudrun-1agbg28g98/renders/otarjosy9b/out.mp4'} download target="_blank"
+            rel="noopener noreferrer" >
+            <Button><DownloadIcon /> Export & Download</Button>
+          </a>
+        }
       </div>
     </div>
   )

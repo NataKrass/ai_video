@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import Authentication from './Authentication'
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import Authentication from './Authentication';
 
 function Hero() {
   return (
