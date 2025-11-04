@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬 AI Video Generator
 
-## Getting Started
+An AI-powered video generation platform built with **Next.js**, **Convex**, **Google Cloud**, and **Remotion**.  
+It allows users to generate, render, and download custom AI videos directly from the browser.
 
-First, run the development server:
+---
 
+## 🚀 Features
+
+- 🎥 **Video Rendering via Google Cloud Run & Remotion** — all videos are rendered in the cloud for high performance.  
+- 🤖 **AI Content Generation** — integrates with **OpenAI**, **Gemini**, and other AI assistants to generate scripts and video content.  
+- 🔊 **Speech-to-Text & Audio Processing** — powered by **Deepgram** for high-quality voice recognition.  
+- ☁️ **Database Management with Convex** — provides real-time data storage and retrieval.  
+- 🔐 **Google Authentication** — users can log in securely using their Google accounts.  
+- 💾 **Cloud File Storage** — media files and rendered videos are stored in **Google Cloud Storage**.  
+- 🧩 **Ingest API Integration** — enables media uploads and real-time updates to cloud storage.  
+- 📦 **Modern Frontend Stack** — built with **Next.js (App Router)** and **React** for a clean and interactive UI.  
+
+---
+
+## 🧠 Tech Stack
+
+| Category | Technologies |
+|-----------|---------------|
+| **Frontend** | Next.js, React, Tailwind CSS |
+| **Backend / Cloud** | Google Cloud Run, Remotion, Convex |
+| **AI Services** | OpenAI, Gemini, Deepgram |
+| **Authentication** | Google OAuth |
+| **Storage** | Google Cloud Storage |
+| **Other Integrations** | Ingest API |
+
+---
+
+## 🧰 Getting Started
+
+### 1️⃣ Clone the repository
 ```bash
+git clone https://github.com/yourusername/ai-video-generator.git
+cd ai-video-generator
+2️⃣ Install dependencies
+npm install
+# or
+yarn install
+npx convex dev
+npm install inngest
+npx inngest-cli@latest dev
+3️⃣ Set up environment variables
+
+Create a .env.local file and add your own keys (keep them private!):
+
+NEXT_PUBLIC_CONVEX_URL=your_convex_url
+NEXT_PUBLIC_OPENAI_API_KEY=your_openai_api_key
+NEXT_PUBLIC_GEMINI_API_KEY=your_gemini_key
+NEXT_PUBLIC_DEEPGRAM_API_KEY=your_deepgram_key
+
+⚠️ Important: Never expose your API keys in public repositories.
+
+4️⃣ Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Then open http://localhost:3000
+ in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+☁️ Cloud Rendering with Remotion
 
-## Learn More
+This project uses Remotion Cloud Run to render videos on Google Cloud.
+Each video is generated, uploaded, and stored in a Google Cloud Storage bucket for easy download.
 
-To learn more about Next.js, take a look at the following resources:
+📸 Preview
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Coming soon ...
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+🧑‍💻 Author
 
-## Deploy on Vercel
+Developed with ❤️ by Nata_Krass
+If you like this project, feel free to ⭐ it on GitHub!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔗 Useful Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js Documentation](https://nextjs.org/)
+- [Remotion](https://www.remotion.dev/)
+- [Google Cloud](https://cloud.google.com/)
+- [OpenAI](https://openai.com)
+- [Gemini](https://deepmind.google/technologies/gemini/)
+- [Deepgram](https://deepgram.com)
+- [Convex](https://www.convex.dev/)
+
