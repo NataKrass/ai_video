@@ -1,11 +1,11 @@
-import React from 'react'
-import DashboardProvider from './provider'
+import React from 'react';
+import DashboardProvider from './provider';
 
-function DashboardLayout({children}) {
+function DashboardLayout({ children }) {
   return (
     <div>
       <DashboardProvider>
-      {children}
+        {children}
       </DashboardProvider>
     </div>
   )

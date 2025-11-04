@@ -1,14 +1,14 @@
-'use client'
-import { useAuthContext } from '../provider'
-import { SidebarProvider } from '@/components/ui/sidebar'
-import React, { useEffect } from 'react'
-import AppSidebar from './_components/AppSidebar'
-import AppHeader from './_components/AppHeader'
-import { useRouter } from 'next/navigation'
+'use client';
+import { useAuthContext } from '../provider';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import React, { useEffect } from 'react';
+import AppSidebar from './_components/AppSidebar';
+import AppHeader from './_components/AppHeader';
+import { useRouter } from 'next/navigation';
 
-function DashboardProvider({children}) {
+function DashboardProvider({ children }) {
 
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,11 +16,11 @@ function DashboardProvider({children}) {
   }, [user])
 
   const checkUserAuthenticated = () => {
-   if(!user) {
-    router.replace('/');
-   }
+    if (!user) {
+      router.replace('/');
+    }
   }
-  
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -31,7 +31,7 @@ function DashboardProvider({children}) {
         </div>
       </div>
     </SidebarProvider>
-    
+
   )
 }
 

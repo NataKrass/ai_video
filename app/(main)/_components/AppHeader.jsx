@@ -1,12 +1,12 @@
-'use client'
-import { useAuthContext } from '../../provider'
-import { SidebarTrigger } from '@/components/ui/sidebar'
+'use client';
+import { useAuthContext } from '../../provider';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import Image from 'next/image';
-import React from 'react'
+import React from 'react';
 
 function AppHeader() {
 
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <div className='p-3 flex justify-between items-center h-14'>

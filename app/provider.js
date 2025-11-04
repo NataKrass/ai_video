@@ -1,11 +1,11 @@
-'use client'
-import React, { useContext, useEffect, useState } from 'react'
-import { ThemeProvider as NextThemesProvider } from "next-themes"
-import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '@/configs/firebaseConfig'
-import { AuthContext } from './_context/AuthContext'
-import {  useMutation } from "convex/react";
-import { api } from '@/convex/_generated/api'
+'use client';
+import React, { useContext, useEffect, useState } from 'react';
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/configs/firebaseConfig';
+import { AuthContext } from './_context/AuthContext';
+import { useMutation } from "convex/react";
+import { api } from '@/convex/_generated/api';
 
 function Provider({ children }) {
   const [user, setUser] = useState();
@@ -13,7 +13,6 @@ function Provider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log(user);
       setUser(user);
 
       if (user) {
@@ -31,15 +30,15 @@ function Provider({ children }) {
 
   return (
     <div>
-      
-        <AuthContext.Provider value={{ user }} >
-          <NextThemesProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange>{children}</NextThemesProvider>
-        </AuthContext.Provider>
-      
+
+      <AuthContext.Provider value={{ user }} >
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange>{children}</NextThemesProvider>
+      </AuthContext.Provider>
+
     </div>
 
   )
