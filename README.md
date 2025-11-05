@@ -1,6 +1,6 @@
 # 🎬 AI Video Generator
 
-An AI-powered video generation platform built with **Next.js**, **Convex**, **Google Cloud**, and **Remotion**.  
+An AI-powered video generation platform built with **Next.js**, **Convex**, **Google Cloud**, **PayPal**, and **Remotion**.  
 It allows users to generate, render, and download custom AI videos directly from the browser.
 
 ---
@@ -12,7 +12,8 @@ It allows users to generate, render, and download custom AI videos directly from
 - 🔊 **Speech-to-Text & Audio Processing** — powered by **Deepgram** for high-quality voice recognition.  
 - ☁️ **Database Management with Convex** — provides real-time data storage and retrieval.  
 - 🔐 **Google Authentication** — users can log in securely using their Google accounts.  
-- 💾 **Cloud File Storage** — media files and rendered videos are stored in **Google Cloud Storage**.  
+- 💾 **Cloud File Storage** — media files and rendered videos are stored in **Google Cloud Storage**.
+- 💳 **PayPal Integration** — supports secure online payments and subscriptions. 
 - 🧩 **Ingest API Integration** — enables media uploads and real-time updates to cloud storage.  
 - 📦 **Modern Frontend Stack** — built with **Next.js (App Router)** and **React** for a clean and interactive UI.  
 
