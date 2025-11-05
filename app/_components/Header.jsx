@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 function Header() {
   const { user } = useAuthContext();
-  console.log('user', user)
+
   return (
     <div className='p-10 flex items-center justify-between'>
       <div className='flex'><Image src={'/logo.svg'}
