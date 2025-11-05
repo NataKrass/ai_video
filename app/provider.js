@@ -6,6 +6,7 @@ import { auth } from '@/configs/firebaseConfig';
 import { AuthContext } from './_context/AuthContext';
 import { useMutation } from "convex/react";
 import { api } from '@/convex/_generated/api';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 function Provider({ children }) {
   const [user, setUser] = useState();
@@ -31,12 +32,14 @@ function Provider({ children }) {
   return (
     <div>
 
-      <AuthContext.Provider value={{ user }} >
-        <NextThemesProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange>{children}</NextThemesProvider>
+      <AuthContext.Provider value={{ user, setUser }} >
+        <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
+          <NextThemesProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange>{children}</NextThemesProvider>
+        </PayPalScriptProvider>
       </AuthContext.Provider>
 
     </div>
