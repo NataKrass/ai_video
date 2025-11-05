@@ -185,7 +185,7 @@ export const GenerateVideoData = inngest.createFunction(
       async () => {
         // TODO: make RenderVideo return a string
         // const safeDownloadUrl = RenderVideo || undefined;
-        const safeDownloadUrl = 'https://storage.googleapis.com/remotioncloudrun-1agbg28g98/renders/otarjosy9b/out.mp4'
+        const safeDownloadUrl = 'https://storage.googleapis.com/remotioncloudrun-1agbg28g98/renders/otarjosy9b/out.mp4';
         const result = await convex.mutation(api.videodata.UpdateVideoRecord, {
           recordId: recordId,
           audioUrl: GenerateAudioFile,

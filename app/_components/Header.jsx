@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 function Header() {
   const { user } = useAuthContext();
-
+  console.log('user', user)
   return (
     <div className='p-10 flex items-center justify-between'>
       <div className='flex'><Image src={'/logo.svg'}
@@ -25,7 +25,7 @@ function Header() {
           <Link href={'/dashboard'}>
             <Button>Dashboard</Button>
           </Link>
-          <Image src={user?.photoURL} alt='user' width={40} height={40}
+          <Image src={user?.pictureURL} alt='user' width={40} height={40}
             className='rounded-full' />
         </div>}
       </div>
