@@ -25,7 +25,7 @@ function Header() {
           <Link href={'/dashboard'}>
             <Button>Dashboard</Button>
           </Link>
-          <Image src={user?.photoURL} alt='user' width={40} height={40}
+          <Image src={user?.pictureURL} alt='user' width={40} height={40}
             className='rounded-full' />
         </div>}
       </div>
