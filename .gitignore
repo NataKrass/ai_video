@@ -39,4 +39,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Ignore macOS app bundles and VS Code binaries
+*.app
+.DS_Store
+
+# VS Code settings
+.vscode/
+
 remotion-youtube-prod-c423dabf3084.json
