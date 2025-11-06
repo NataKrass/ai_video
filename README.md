@@ -1,5 +1,7 @@
 # 🎬 AI Video Generator
 
+- [Link to Application here](https://ai-video-iota-jet.vercel.app/)
+
 An AI-powered video generation platform built with **Next.js**, **Convex**, **Google Cloud**, **PayPal**, and **Remotion**.  
 It allows users to generate, render, and download custom AI videos directly from the browser.
 
@@ -29,6 +31,7 @@ It allows users to generate, render, and download custom AI videos directly from
 | **Authentication** | Google OAuth |
 | **Storage** | Google Cloud Storage |
 | **Other Integrations** | Ingest API |
+| **Deployment** | Vercel |
 
 ---
 
