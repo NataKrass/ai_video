@@ -29,11 +29,11 @@ const MenuItems = [
     url: '/create-new-video',
     icon: LucideFileVideo
   },
-  {
-    title: 'Explore',
-    url: '/explore',
-    icon: Search
-  },
+  // {
+  //   title: 'Explore',
+  //   url: '/explore',
+  //   icon: Search
+  // },
   {
     title: 'Billing',
     url: '/billing',
@@ -95,9 +95,11 @@ function AppSidebar() {
             <Gem />
             <h3>{user?.credits} Credits Left</h3>
           </div>
-          <Button className='w-full mt-3'>
-            Buy More Credits
-          </Button>
+          <Link href='/billing'>
+            <Button className='w-full mt-3'>
+              Buy More Credits
+            </Button>
+          </Link>
         </div>
       </SidebarFooter>
     </Sidebar>
