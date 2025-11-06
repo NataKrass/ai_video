@@ -30,7 +30,7 @@ It allows users to generate, render, and download custom AI videos directly from
 | **AI Services** | OpenAI, Gemini, Deepgram |
 | **Authentication** | Google OAuth |
 | **Storage** | Google Cloud Storage |
-| **Other Integrations** | Ingest API |
+| **Other Integrations** | Inngest API |
 | **Deployment** | Vercel |
 
 ---
